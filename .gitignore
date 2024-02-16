@@ -3,6 +3,9 @@
 
 # .idea
 .idea/
+**/BlueprintAssist/NodeSizeCache/
+#blueprint assist
+
 # Compiled Object files
 *.slo
 *.lo
