@@ -3,23 +3,25 @@
 
 #include "MovingPlatform.h"
 
+#include "ShaderPrintParameters.h"
 #include "Components/BoxComponent.h"
 
 AMovingPlatform::AMovingPlatform()
 {
 	MainCollider = CreateDefaultSubobject<UBoxComponent>("Main Collider");
-	RootComponent = MainCollider;
+	SetRootComponent(MainCollider);
 	GetStaticMeshComponent()->SetCollisionProfileName(FName("NoCollision"));
+	MainCollider->SetCollisionProfileName(FName("BlockAll"));
 	PrimaryActorTick.bCanEverTick = true;
 	SetMobility(EComponentMobility::Movable);
 
-	SetReplicates(true);
-	SetReplicateMovement(true);
+	bReplicates = true;
 }
 
 void AMovingPlatform::BeginPlay()
 {
 	Super::BeginPlay();
+	SetReplicateMovement(true);
 
 	GlobalStartLocation = GetActorLocation();
 	GlobalEndLocation = GetTransform().TransformPosition(TargetLocation);
@@ -50,9 +52,12 @@ void AMovingPlatform::Tick(float DeltaSeconds)
 void AMovingPlatform::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
-	if (!IsValid(MainCollider))
+	if (!IsValid(MainCollider) || !IsValid(GetStaticMeshComponent()))
 	{
 		return;
 	}
 	MainCollider->SetBoxExtent(PlatformSize/2);
+
+	//prevent this component not moving when moving the actor (stuck to (0,0,0))
+	GetStaticMeshComponent()->SetupAttachment(MainCollider);
 }

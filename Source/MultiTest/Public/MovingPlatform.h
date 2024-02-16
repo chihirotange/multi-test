@@ -32,7 +32,7 @@ private:
 	UPROPERTY(EditAnywhere)
 	float MoveSpeed;
 	
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	UBoxComponent* MainCollider;
 
 	UPROPERTY(EditAnywhere)
