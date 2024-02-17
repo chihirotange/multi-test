@@ -6,16 +6,28 @@
 #include "ShaderPrintParameters.h"
 #include "Components/BoxComponent.h"
 
+bool AMovingPlatform::Activate_Implementation()
+{
+	SetActorTickEnabled(true);
+	return true;
+}
+
+bool AMovingPlatform::Deactivate_Implementation()
+{
+	SetActorTickEnabled(false);
+	return true;
+}
+
 AMovingPlatform::AMovingPlatform()
 {
 	MainCollider = CreateDefaultSubobject<UBoxComponent>("Main Collider");
 	SetRootComponent(MainCollider);
 	GetStaticMeshComponent()->SetCollisionProfileName(FName("NoCollision"));
 	MainCollider->SetCollisionProfileName(FName("BlockAll"));
-	PrimaryActorTick.bCanEverTick = true;
 	SetMobility(EComponentMobility::Movable);
 
 	bReplicates = true;
+	PrimaryActorTick.bCanEverTick = true;
 }
 
 void AMovingPlatform::BeginPlay()
@@ -23,6 +35,14 @@ void AMovingPlatform::BeginPlay()
 	Super::BeginPlay();
 	SetReplicateMovement(true);
 
+	if(StartActivated)
+	{
+		SetActorTickEnabled(true);
+	}
+	else
+	{
+		SetActorTickEnabled(false);
+	}
 	GlobalStartLocation = GetActorLocation();
 	GlobalEndLocation = GetTransform().TransformPosition(TargetLocation);
 	TargetTravelDistance = TargetLocation.Size();

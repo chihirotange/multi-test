@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/StaticMeshActor.h"
+#include "Interface/Activatable.h"
 #include "MovingPlatform.generated.h"
 
 /**
@@ -12,11 +13,13 @@
 
 class UBoxComponent;
 UCLASS()
-class MULTITEST_API AMovingPlatform : public AStaticMeshActor
+class MULTITEST_API AMovingPlatform : public AStaticMeshActor, public IActivatable
 {
 	GENERATED_BODY()
-	
+
 public:
+	virtual bool Activate_Implementation() override;
+	virtual bool Deactivate_Implementation() override;
 	AMovingPlatform();
 
 private:
@@ -37,6 +40,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	FVector PlatformSize = FVector(1,1,1);
+
+	UPROPERTY(EditAnywhere)
+	bool StartActivated = true;
 	
 	FVector GlobalStartLocation;
 	FVector GlobalEndLocation;

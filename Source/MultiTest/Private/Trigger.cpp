@@ -4,6 +4,7 @@
 #include "Trigger.h"
 
 #include "Components/BoxComponent.h"
+#include "Interface/Activatable.h"
 
 // Sets default values
 ATrigger::ATrigger()
@@ -31,13 +32,33 @@ void ATrigger::BeginPlay()
 void ATrigger::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("overlap"));
+	if(!HasAuthority())
+	{
+		return;
+	}
+	for (AActor* Actor : ActivatableObjects)
+	{
+		if (Actor->Implements<UActivatable>())
+		{
+			IActivatable::Execute_Activate(Actor);
+		}
+	}
 }
 
 void ATrigger::StopOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex)
 {
-	UE_LOG(LogTemp, Warning, TEXT("stop overlap"));
+	if(!HasAuthority())
+	{
+		return;
+	}
+	for (AActor* Actor : ActivatableObjects)
+	{
+		if (Actor->Implements<UActivatable>())
+		{
+			IActivatable::Execute_Deactivate(Actor);
+		}
+	}
 }
 
 // Called every frame

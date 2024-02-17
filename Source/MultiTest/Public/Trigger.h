@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Trigger.generated.h"
+
 class UBoxComponent;
 UCLASS()
 class MULTITEST_API ATrigger : public AActor
@@ -36,4 +37,7 @@ private:
 
 	UPROPERTY()
 	USceneComponent* Root;
+
+	UPROPERTY(EditAnywhere)
+	TSet<AActor*> ActivatableObjects;
 };
