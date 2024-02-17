@@ -20,3 +20,13 @@ void UMultiTestGameInstance::Host()
 	//?listen for other to join
 	CurrentWorld->ServerTravel("/Game/Levels/L_Playground?listen");
 }
+
+void UMultiTestGameInstance::Join(const FString& IP)
+{
+	APlayerController* LocalPlayerController = GetFirstLocalPlayerController();
+	if (!IsValid(LocalPlayerController))
+	{
+		return;
+	}
+	LocalPlayerController->ClientTravel(IP, TRAVEL_Absolute);
+}
