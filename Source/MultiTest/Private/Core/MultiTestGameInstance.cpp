@@ -2,22 +2,10 @@
 #include "Core/MultiTestGameInstance.h"
 #include "Blueprint/UserWidget.h"
 
-bool UMultiTestGameInstance::LoadMainMenu_Implementation()
-{
-	if(!IsValid(MainMenuWidgetClass))
-	{
-		UE_LOG(LogTemp, Error, TEXT("No assigned main menu widget class in game instance!"));
-		return false;
-	}
-	UUserWidget* MainMenu = CreateWidget(this, MainMenuWidgetClass);
-	MainMenu->AddToViewport();
-	return true;
-}
-
 void UMultiTestGameInstance::Init()
 {
 	Super::Init();
-	UE_LOG(LogTemp, Warning, TEXT("Init"));
+	CurrentLocalPlayerController = GetFirstLocalPlayerController();
 }
 
 void UMultiTestGameInstance::Host()
@@ -32,12 +20,4 @@ void UMultiTestGameInstance::Host()
 	CurrentWorld->ServerTravel("/Game/Levels/L_Playground?listen");
 }
 
-void UMultiTestGameInstance::Join(const FString& IP)
-{
-	APlayerController* LocalPlayerController = GetFirstLocalPlayerController();
-	if (!IsValid(LocalPlayerController))
-	{
-		return;
-	}
-	LocalPlayerController->ClientTravel(IP, TRAVEL_Absolute);
-}
+

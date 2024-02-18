@@ -10,14 +10,11 @@
 /**
  * 
  */
-
+class APlayerController;
 class UUserWidget;
 UCLASS()
-class MULTITEST_API UMultiTestGameInstance : public UGameInstance, public IGenericMenuUI
+class MULTITEST_API UMultiTestGameInstance : public UGameInstance
 {
-public:
-	virtual bool LoadMainMenu_Implementation() override;
-
 private:
 	GENERATED_BODY()
 
@@ -25,11 +22,10 @@ private:
 
 	UFUNCTION(Exec)
 	void Host();
-
-	UFUNCTION(Exec)
-	void Join(const FString& IP);
-
 private:
 	UPROPERTY(EditAnywhere, Category = Widgets)
 	TSubclassOf<UUserWidget> MainMenuWidgetClass;
+
+	UPROPERTY()
+	APlayerController* CurrentLocalPlayerController;
 };
