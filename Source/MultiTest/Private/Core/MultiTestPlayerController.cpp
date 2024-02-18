@@ -5,7 +5,11 @@
 
 #include "Blueprint/UserWidget.h"
 
-void AMultiTestPlayerController::Join(const FString& IP)
+void AMultiTestPlayerController::Host_Implementation()
+{
+}
+
+void AMultiTestPlayerController::Join_Implementation(const FString& IP)
 {
 	ClientTravel(IP, TRAVEL_Absolute);
 }

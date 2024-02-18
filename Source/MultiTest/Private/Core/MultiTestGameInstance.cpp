@@ -7,7 +7,11 @@ void UMultiTestGameInstance::Init()
 	Super::Init();
 }
 
-void UMultiTestGameInstance::Host()
+void UMultiTestGameInstance::Join_Implementation(const FString& IP)
+{
+}
+
+void UMultiTestGameInstance::Host_Implementation()
 {
 	UWorld* CurrentWorld = GetWorld();
 	if(!IsValid(CurrentWorld))
