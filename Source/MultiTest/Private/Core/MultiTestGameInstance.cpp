@@ -5,7 +5,6 @@
 void UMultiTestGameInstance::Init()
 {
 	Super::Init();
-	CurrentLocalPlayerController = GetFirstLocalPlayerController();
 }
 
 void UMultiTestGameInstance::Host()

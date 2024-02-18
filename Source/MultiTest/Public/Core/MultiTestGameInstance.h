@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
-#include "Interface/GenericMenuUI.h"
 #include "MultiTestGameInstance.generated.h"
 
 /**
@@ -25,7 +24,4 @@ private:
 private:
 	UPROPERTY(EditAnywhere, Category = Widgets)
 	TSubclassOf<UUserWidget> MainMenuWidgetClass;
-
-	UPROPERTY()
-	APlayerController* CurrentLocalPlayerController;
 };
