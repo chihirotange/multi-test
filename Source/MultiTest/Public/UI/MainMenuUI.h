@@ -11,7 +11,7 @@ class UEditableTextBox;
 /**
  * 
  */
-UCLASS()
+UCLASS(Abstract)
 class MULTITEST_API UMainMenuUI : public UUserWidget
 {
 	GENERATED_BODY()
