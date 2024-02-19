@@ -3,10 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "OnlineSubsystem.h"
 #include "Engine/GameInstance.h"
 #include "UI/Interface/MenuInterface.h"
 #include "MultiTestGameInstance.generated.h"
 
+class FNamedOnlineSession;
+class IOnlineSubsystem;
 /**
  * 
  */
@@ -24,8 +27,22 @@ private:
 	GENERATED_BODY()
 
 	virtual void Init() override;
+	
+	UFUNCTION()
+	void OnCreateSessionCompleted(FName Name, bool Success) const;
+
+	UFUNCTION()
+	void OnCreateSessionAfterSessionDestroy(FName Name, bool Success) const;
+
+	bool IsSessionExists(const FName& SessionName, FNamedOnlineSession*& Session);
+	bool CreateOnlineSession(const FName& SessionName) const;
 
 private:
 	UPROPERTY(EditAnywhere, Category = Widgets)
 	TSubclassOf<UUserWidget> MainMenuWidgetClass;
+
+	IOnlineSessionPtr CurrentOnlineSessionInterface;
+	FDelegateHandle DestroySessionDelegateHandle;
 };
+
+
