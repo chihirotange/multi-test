@@ -52,9 +52,8 @@ void UMultiTestGameInstance::Host_Implementation()
 	FNamedOnlineSession* FoundSession;
 	if(IsSessionExists("Ai chan", FoundSession))
 	{
-		CurrentOnlineSessionInterface->DestroySession("Ai chan");
-		//@TODO will this keep adding the function to the delegate?
 		DestroySessionDelegateHandle = CurrentOnlineSessionInterface->OnDestroySessionCompleteDelegates.AddUObject(this, &UMultiTestGameInstance::OnCreateSessionAfterSessionDestroy);
+		CurrentOnlineSessionInterface->DestroySession("Ai chan");
 		return;
 	}
 	CreateOnlineSession("Ai chan");
