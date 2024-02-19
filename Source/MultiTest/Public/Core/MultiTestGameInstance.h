@@ -8,6 +8,7 @@
 #include "UI/Interface/MenuInterface.h"
 #include "MultiTestGameInstance.generated.h"
 
+class UMainMenuUI;
 class FNamedOnlineSession;
 class IOnlineSubsystem;
 /**
@@ -39,7 +40,7 @@ private:
 
 private:
 	UPROPERTY(EditAnywhere, Category = Widgets)
-	TSubclassOf<UUserWidget> MainMenuWidgetClass;
+	TSubclassOf<UMainMenuUI> MainMenuWidgetClass;
 
 	IOnlineSessionPtr CurrentOnlineSessionInterface;
 	FDelegateHandle DestroySessionDelegateHandle;
