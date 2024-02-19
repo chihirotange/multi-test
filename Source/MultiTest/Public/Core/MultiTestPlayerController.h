@@ -8,6 +8,7 @@
 #include "UI/Interface/MenuInterface.h"
 #include "MultiTestPlayerController.generated.h"
 
+class UMainMenuUI;
 /**
  * 
  */
@@ -25,5 +26,5 @@ private:
 
 private:
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<UUserWidget> MainMenuWidgetClass;
+	TSubclassOf<UMainMenuUI> MainMenuWidgetClass;
 };

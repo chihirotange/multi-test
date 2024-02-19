@@ -4,6 +4,7 @@
 #include "Core/MultiTestPlayerController.h"
 
 #include "Blueprint/UserWidget.h"
+#include "UI/MainMenuUI.h"
 
 void AMultiTestPlayerController::Host_Implementation()
 {
