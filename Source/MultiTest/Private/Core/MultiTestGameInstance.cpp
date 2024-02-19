@@ -12,17 +12,16 @@ void UMultiTestGameInstance::Init()
 	UE_LOG(LogTemp, Warning, TEXT("Created subsystem name %s"), *Name.ToString());
 
 	CurrentOnlineSessionInterface = OnlineSubsystem->GetSessionInterface();
-	if (!ensure(CurrentOnlineSessionInterface.IsValid())) return;
-
-	CurrentOnlineSessionInterface->OnCreateSessionCompleteDelegates.AddUObject(this, &UMultiTestGameInstance::OnCreateSessionCompleted);
+	if (!ensure(CurrentOnlineSessionInterface.IsValid())) {}
 }
 
 void UMultiTestGameInstance::OnCreateSessionCompleted(FName Name, bool Success) const
 {
 	if(!Success) return;
+	CurrentOnlineSessionInterface->OnCreateSessionCompleteDelegates.Remove(CreateSessionDelegateHandle);
 	UE_LOG(LogTemp, Log, TEXT("Created session %s"), *Name.ToString());
 	UWorld* CurrentWorld = GetWorld();
-	if(!IsValid(CurrentWorld))
+	if(!ensure(IsValid(CurrentWorld)))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Cannot get current world"));
 		return;
@@ -30,7 +29,7 @@ void UMultiTestGameInstance::OnCreateSessionCompleted(FName Name, bool Success) 
 	CurrentWorld->ServerTravel("/Game/Levels/L_Playground?listen");
 }
 
-void UMultiTestGameInstance::OnCreateSessionAfterSessionDestroy(FName Name, bool Success) const
+void UMultiTestGameInstance::OnCreateSessionAfterSessionDestroy(FName Name, bool Success)
 {
 	if(!Success) return;
 	CurrentOnlineSessionInterface->OnDestroySessionCompleteDelegates.Remove(DestroySessionDelegateHandle);
@@ -59,8 +58,9 @@ void UMultiTestGameInstance::Host_Implementation()
 	CreateOnlineSession("Ai chan");
 }
 
-bool UMultiTestGameInstance::CreateOnlineSession(const FName& SessionName) const
+bool UMultiTestGameInstance::CreateOnlineSession(const FName& SessionName)
 {
+	CreateSessionDelegateHandle = CurrentOnlineSessionInterface->OnCreateSessionCompleteDelegates.AddUObject(this, &UMultiTestGameInstance::OnCreateSessionCompleted);
 	FOnlineSessionSettings SessionSettings;
 	CurrentOnlineSessionInterface->CreateSession(0, SessionName, SessionSettings);
 	return true;

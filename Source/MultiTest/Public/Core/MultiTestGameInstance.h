@@ -33,15 +33,16 @@ private:
 	void OnCreateSessionCompleted(FName Name, bool Success) const;
 
 	UFUNCTION()
-	void OnCreateSessionAfterSessionDestroy(FName Name, bool Success) const;
+	void OnCreateSessionAfterSessionDestroy(FName Name, bool Success);
 
 	bool IsSessionExists(const FName& SessionName, FNamedOnlineSession*& Session);
-	bool CreateOnlineSession(const FName& SessionName) const;
+	bool CreateOnlineSession(const FName& SessionName);
 
 private:
 
 	IOnlineSessionPtr CurrentOnlineSessionInterface;
 	FDelegateHandle DestroySessionDelegateHandle;
+	FDelegateHandle CreateSessionDelegateHandle;
 };
 
 
