@@ -39,8 +39,6 @@ private:
 	bool CreateOnlineSession(const FName& SessionName) const;
 
 private:
-	UPROPERTY(EditAnywhere, Category = Widgets)
-	TSubclassOf<UMainMenuUI> MainMenuWidgetClass;
 
 	IOnlineSessionPtr CurrentOnlineSessionInterface;
 	FDelegateHandle DestroySessionDelegateHandle;
