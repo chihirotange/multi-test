@@ -26,7 +26,7 @@ bool AMultiTestPlayerController::LoadMainMenu_Implementation()
 	MainMenuWidget->AddToViewport();
 	
 	FInputModeUIOnly InputData;
-	InputData.SetWidgetToFocus(MainMenuWidget->TakeWidget());
+	// InputData.SetWidgetToFocus(MainMenuWidget->TakeWidget());
 	InputData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
 	bShowMouseCursor = true;
 	return true;
