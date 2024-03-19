@@ -20,6 +20,8 @@ UCLASS()
 class MULTITEST_API UMultiTestGameInstance : public UGameInstance, public IMenuInterface
 {
 public:
+	virtual void Find_Implementation() override;
+
 	virtual void Join_Implementation(const FString& IP) override;
 
 	virtual void Host_Implementation() override;

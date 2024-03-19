@@ -29,4 +29,8 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void Join(const FString& IP);
 	virtual void Join_Implementation(const FString& IP) = 0;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void Find();
+	virtual void Find_Implementation() = 0;
 };

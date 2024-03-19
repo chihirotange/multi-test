@@ -14,6 +14,7 @@ bool UMainMenuUI::Initialize()
 	if(!IsValid(Host) || !IsValid(Join)) return false;
 
 	CurrentGameInstance = GetGameInstance();
+	OwningPlayerController = GetOwningPlayer();
 
 	if(!IsValid(CurrentGameInstance))
 	{
@@ -22,28 +23,30 @@ bool UMainMenuUI::Initialize()
 	}
 	Host->OnClicked.AddDynamic(this, &UMainMenuUI::HostServer);
 	Join->OnClicked.AddDynamic(this, &UMainMenuUI::JoinServer);
+	Find->OnClicked.AddDynamic(this, &UMainMenuUI::FindServer);
+
+	if(!CurrentGameInstance->Implements<UMenuInterface>() || !OwningPlayerController->Implements<UMenuInterface>())
+	{
+		UE_LOG(LogTemp, Error, TEXT("Make sure game instance and player controller implemented IMenuInterface"));
+		return false;
+	}
 
 	return true;
 }
 
 void UMainMenuUI::HostServer()
 {
-	if(!CurrentGameInstance->Implements<UMenuInterface>())
-	{
-		UE_LOG(LogTemp, Error, TEXT("Current game instance hasn't implemented IMenuInterface yet!"));
-		return;
-	}
 	IMenuInterface::Execute_Host(CurrentGameInstance);
 }
 
 void UMainMenuUI::JoinServer()
 {
 	if(!IsValid(IpAddress)) return;
-	APlayerController* OwningPlayerController = GetOwningPlayer();
-	if(!OwningPlayerController->Implements<UMenuInterface>())
-	{
-		UE_LOG(LogTemp, Error, TEXT("Current player controller hasn't implemented IMenuInterface yet!"));
-		return;
-	}
 	IMenuInterface::Execute_Join(OwningPlayerController, IpAddress->GetText().ToString());
+}
+
+void UMainMenuUI::FindServer()
+{
+	UE_LOG(LogTemp, Error, TEXT("Find server"));
+	IMenuInterface::Execute_Find(OwningPlayerController);
 }

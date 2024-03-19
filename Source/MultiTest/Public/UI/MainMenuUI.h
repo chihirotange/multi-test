@@ -24,6 +24,9 @@ private:
 	UButton* Host;
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UButton* Find;
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	UButton* Join;
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
@@ -35,7 +38,13 @@ private:
 	UFUNCTION()
 	void JoinServer();
 
+	UFUNCTION()
+	void FindServer();
+
 private:
 	UPROPERTY()
 	UGameInstance* CurrentGameInstance;
+
+	UPROPERTY()
+	APlayerController* OwningPlayerController;
 };

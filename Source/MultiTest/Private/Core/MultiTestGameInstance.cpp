@@ -42,6 +42,10 @@ bool UMultiTestGameInstance::IsSessionExists(const FName& SessionName, FNamedOnl
 	return(Session != nullptr);
 }
 
+void UMultiTestGameInstance::Find_Implementation()
+{
+}
+
 void UMultiTestGameInstance::Join_Implementation(const FString& IP)
 {
 }
@@ -62,6 +66,9 @@ bool UMultiTestGameInstance::CreateOnlineSession(const FName& SessionName)
 {
 	CreateSessionDelegateHandle = CurrentOnlineSessionInterface->OnCreateSessionCompleteDelegates.AddUObject(this, &UMultiTestGameInstance::OnCreateSessionCompleted);
 	FOnlineSessionSettings SessionSettings;
+	SessionSettings.bIsLANMatch = true;
+	SessionSettings.bShouldAdvertise = true;
+	SessionSettings.NumPublicConnections = 2;
 	CurrentOnlineSessionInterface->CreateSession(0, SessionName, SessionSettings);
 	return true;
 }
