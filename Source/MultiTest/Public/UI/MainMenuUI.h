@@ -11,7 +11,7 @@ class UEditableTextBox;
 /**
  * 
  */
-UCLASS()
+UCLASS(Abstract)
 class MULTITEST_API UMainMenuUI : public UUserWidget
 {
 	GENERATED_BODY()
@@ -22,6 +22,9 @@ protected:
 private:
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	UButton* Host;
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UButton* Find;
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	UButton* Join;
@@ -35,7 +38,13 @@ private:
 	UFUNCTION()
 	void JoinServer();
 
+	UFUNCTION()
+	void FindServer();
+
 private:
 	UPROPERTY()
 	UGameInstance* CurrentGameInstance;
+
+	UPROPERTY()
+	APlayerController* OwningPlayerController;
 };
